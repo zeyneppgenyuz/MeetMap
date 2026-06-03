@@ -1,20 +1,28 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 📍 MeetMap
+**"nerede buluşma derdine son"**
 
-# Run and deploy your AI Studio app
+Grup buluşmalarını organize eden, seçilen semtteki 
+en iyi mekanları öneren web uygulaması.
 
-This contains everything you need to run your app locally.
+## 🌐 Canlı Demo
+[meetmap-322033557353.europe-west2.run.app](https://meetmap-322033557353.europe-west2.run.app)
 
-View your app in AI Studio: https://ai.studio/apps/fa59df49-32a3-4421-9f46-d36f5211e649
+## 🛠️ Kullanılan Teknolojiler
+- Google AI Studio (Gemini) — Kod geliştirme
+- Google Stitch — UI Tasarımı  
+- Firebase Authentication — Kullanıcı girişi
+- Firebase Firestore — Veritabanı
+- Google Cloud Run — Deploy
 
-## Run Locally
+## 📱 Özellikler
+- Email/Google ile giriş
+- Grup oluşturma ve yönetme
+- Semte göre mekan keşfi (Sushi, Kafe, Pizza, Burger)
+- İnteraktif harita + konum pinleri
+- Google Maps yol tarifi entegrasyonu
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 👥 Takım
+- Zeynep Genyüz — Proje Yöneticisi / Geliştirici
+- İsmail Bilal Sarpkaya — UI/UX Tasarım
+- İclal Ekinci — Firebase Veri Oluşturma
+- İrem Kılıç — Rapor ve Sunum Düzenleme
