@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "Venue": {
+      "title": "Venue",
+      "description": "A food or meet venue in a specific district with ratings and image",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the venue"
+        },
+        "description": {
+          "type": "string",
+          "description": "Short description of the venue"
+        },
+        "foodCategory": {
+          "type": "string",
+          "description": "Category: Sushi, Kafe, Pizza, Burger, vb."
+        },
+        "targetDistrict": {
+          "type": "string",
+          "description": "District: Beşiktaş, Kadıköy, Üsküdar, Şişli, Taksim"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "HTTP URL of the venue image"
+        },
+        "rating": {
+          "type": "number",
+          "description": "Rating score out of 5"
+        },
+        "ratingCount": {
+          "type": "number",
+          "description": "Total number of votes"
+        },
+        "mapsUrl": {
+          "type": "string",
+          "description": "Google Maps link for directions"
+        }
+      },
+      "required": ["name", "foodCategory", "targetDistrict", "imageUrl", "rating", "ratingCount", "mapsUrl"]
+    },
+    "Group": {
+      "title": "Group",
+      "description": "A user-created meeting group with targets and members",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the group"
+        },
+        "description": {
+          "type": "string",
+          "description": "Short description or notes about the meeting"
+        },
+        "targetDistrict": {
+          "type": "string",
+          "description": "Target district for the meeting"
+        },
+        "foodCategory": {
+          "type": "string",
+          "description": "Target food category"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "UID of the creator"
+        },
+        "createdByName": {
+          "type": "string",
+          "description": "Display name of the creator"
+        },
+        "members": {
+          "type": "array",
+          "description": "List of user UIDs in this group"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["name", "description", "targetDistrict", "foodCategory", "createdBy", "createdByName", "members", "createdAt"]
+    }
+  },
+  "firestore": {
+    "venues": {
+      "schema": "Venue",
+      "description": "Global venues searchable by category and district"
+    },
+    "groups": {
+      "schema": "Group",
+      "description": "Meeting groups with target settings and members"
+    }
+  }
+}

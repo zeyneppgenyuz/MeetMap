@@ -1,0 +1,6 @@
+{
+  "name": "MeetMap",
+  "description": "📍 Arkadaşlarınızla buluşma noktaları bulun, gruplar oluşturun ve ortak kararlar alın.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

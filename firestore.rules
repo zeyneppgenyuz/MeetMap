@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Entity Validation Helpers
+    function isValidVenue(v) {
+      return v.name is string && v.name.size() <= 200 &&
+             v.description is string && v.description.size() <= 1000 &&
+             v.foodCategory is string && v.foodCategory.size() <= 50 &&
+             v.targetDistrict is string && v.targetDistrict.size() <= 50 &&
+             v.imageUrl is string && v.imageUrl.size() <= 2000 &&
+             v.rating is number &&
+             v.ratingCount is number &&
+             v.mapsUrl is string && v.mapsUrl.size() <= 2000;
+    }
+
+    function isValidGroup(g) {
+      return g.name is string && g.name.size() <= 200 &&
+             g.description is string && g.description.size() <= 1000 &&
+             g.targetDistrict is string && g.targetDistrict.size() <= 50 &&
+             g.foodCategory is string && g.foodCategory.size() <= 50 &&
+             g.createdBy is string && g.createdBy.size() <= 128 &&
+             g.createdByName is string && g.createdByName.size() <= 200 &&
+             g.members is list && g.members.size() <= 50 &&
+             g.createdAt != null;
+    }
+
+    // Rules for Venues
+    match /venues/{venueId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidVenue(incoming());
+      allow update, delete: if false; // System static or seed-only
+    }
+
+    // Rules for Groups
+    match /groups/{groupId} {
+      allow read: if isSignedIn() && (resource.data.createdBy == request.auth.uid || request.auth.uid in resource.data.members);
+      allow create: if isSignedIn() && isValidGroup(incoming()) && incoming().createdBy == request.auth.uid && request.auth.uid in incoming().members;
+      allow update: if isSignedIn() && isValidGroup(incoming()) && resource.data.createdBy == request.auth.uid && incoming().createdBy == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.createdBy == request.auth.uid;
+    }
+
+    match /groups/{groupId}/rsvp/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth.uid == userId;
+    }
+  }
+}
